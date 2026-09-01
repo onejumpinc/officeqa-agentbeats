@@ -28,7 +28,7 @@
   program: {
     // Pinned to the published commit tag, not :latest, so the submission is
     // reproducible: the digest behind this tag cannot change under the run.
-    image: "ghcr.io/onejumpinc/officeqa-proxy-agent:0f3cd6ad89b466ac0e2800c7fca1acd0f26f5bb1",
+    image: "ghcr.io/onejumpinc/officeqa-proxy-agent:7c8c0ecb8d17c3d7d6c09e8b58f9169441e1962d",
     entrypoint: "python server.py --host 0.0.0.0 --port 9019",
     env: {
       OFFICEQA_API_URL:   "${config.officeqa_api_url}",
