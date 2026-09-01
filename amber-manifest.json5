@@ -1,0 +1,45 @@
+{
+  // Amber manifest for the OfficeQA purple agent.
+  //
+  // Format follows an ACCEPTED submission to this same leaderboard
+  // (Solasticeaistudio/solstice-agentbeats amber-manifest-finance.json5) rather
+  // than the generic tutorial: manifest_version 0.1.0, additionalProperties as
+  // a literal boolean, a `slots.proxy` a2a slot, and no metadata block.
+  //
+  // This file is PUBLIC. It carries an image reference, env var NAMES and a
+  // port -- no endpoint, no credential, no solver logic. Both config values
+  // are secrets supplied at run time by AgentBeats, never committed here.
+  manifest_version: "0.1.0",
+
+  config_schema: {
+    type: "object",
+    properties: {
+      officeqa_api_url:   { type: "string", secret: true },
+      officeqa_api_token: { type: "string", secret: true },
+    },
+    required: ["officeqa_api_url", "officeqa_api_token"],
+    additionalProperties: false,
+  },
+
+  slots: {
+    proxy: { kind: "a2a", optional: true },
+  },
+
+  program: {
+    // Pinned to the published commit tag, not :latest, so the submission is
+    // reproducible: the digest behind this tag cannot change under the run.
+    image: "ghcr.io/onejumpinc/officeqa-proxy-agent:0f3cd6ad89b466ac0e2800c7fca1acd0f26f5bb1",
+    entrypoint: "python server.py --host 0.0.0.0 --port 9019",
+    env: {
+      OFFICEQA_API_URL:   "${config.officeqa_api_url}",
+      OFFICEQA_API_TOKEN: "${config.officeqa_api_token}",
+      PYTHONUNBUFFERED:   "1",
+    },
+    network: {
+      endpoints: [{ name: "a2a_endpoint", port: 9019 }],
+    },
+  },
+
+  provides: { a2a: { kind: "a2a", endpoint: "a2a_endpoint" } },
+  exports:  { a2a: "a2a" },
+}
