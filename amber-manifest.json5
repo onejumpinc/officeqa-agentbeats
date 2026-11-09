@@ -42,7 +42,7 @@
     // and `tools/proxy_image.py verify` (run by tools/submit_agentbeats.sh)
     // will confirm the digest was built from the proxy source on disk before
     // anything is submitted.
-    image: "ghcr.io/onejumpinc/officeqa-proxy-agent@sha256:7a6d2d64b9a582b0a57460d13ecb5ef4641afdac8d71d864007c2ce7380ce8fa",
+    image: "ghcr.io/onejumpinc/officeqa-proxy-agent@sha256:12d8f7bada21cf5850db556fe46f48430b8006fc27029900cc3a0f858bf2cbcf",
     entrypoint: "python server.py --host 0.0.0.0 --port 9019",
     env: {
       OFFICEQA_API_URL:   "${config.officeqa_api_url}",
